@@ -1,7 +1,7 @@
 import unittest
 
-from parentnode import ParentNode
-from leafnode import LeafNode
+from htmlnode import ParentNode, LeafNode
+
 
 class TestHTMLNode(unittest.TestCase):
     def test_child_nodes(self):
