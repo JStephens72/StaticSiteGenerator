@@ -3,7 +3,7 @@ import unittest
 from htmlnode import LeafNode
 
 class TestHTMLNode(unittest.TestCase):
-    def test_leaf_to_html(self):
+    def test_leaf_to_html_p(self):
         node = LeafNode(
             "p", 
             "Hello, world!",
@@ -13,10 +13,11 @@ class TestHTMLNode(unittest.TestCase):
             "<p>Hello, world!</p>",
         )
 
+    def test_left_to_html_a(self):
         node = LeafNode(
             "a",
             "Click me!",
-            '{" href": "https://www.google.com"}',
+            {" href": "https://www.google.com"},
         )
         self.assertEqual(
             node.to_html(),

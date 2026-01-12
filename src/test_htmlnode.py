@@ -8,7 +8,7 @@ class TestHTMLNode(unittest.TestCase):
             "div",
             "Hello, world!",
             None,
-            {"class" : "greeting", "href" : "https://boot.dev"},
+            {" class" : "greeting", " href" : "https://boot.dev"},
         )
         self.assertEqual(
             node.props_to_html(),

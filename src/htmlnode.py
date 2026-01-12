@@ -9,14 +9,11 @@ class HTMLNode:
         raise NotImplementedError
     
     def props_to_html(self):
-        print(f"props_to_html: {self.props}")
         if self.props is None:
-            print("True")
             return ""
         props_html = ""
         for prop in self.props:
-            print(f"props_to_html: {prop}")
-            props_html += f' {prop}="{self.props[prop]}"'
+            props_html += f'{prop}="{self.props[prop]}"'
         return props_html
     
     def __repr__(self):
@@ -31,8 +28,6 @@ class LeafNode(HTMLNode):
             raise ValueError("invalid HTML: no value")
         if self.tag is None:
             return self.value
-        print(f"Dictionary: {self.props}")
-        print(f"to_html: *{self.props_to_html()}*")
         return f"<{self.tag}{self.props_to_html()}>{self.value}</{self.tag}>"
     
     def __repr__(self):
