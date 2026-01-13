@@ -3,7 +3,7 @@ from htmlnode import LeafNode
 
 def main():
     text_node = TextNode("This is some anchor text", TextType.LINK, "https://www.boot.dev")
-    print(text_node)
+    #print(text_node)
 
 def text_node_to_html_node(text_node):
     match text_node.text_type:
