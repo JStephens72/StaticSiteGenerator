@@ -1,6 +1,13 @@
 import unittest
 
-from splitnodes import split_nodes_delimiter, split_nodes_link, split_nodes_image
+from inline_markdown import (
+    split_nodes_delimiter, 
+    split_nodes_link, 
+    split_nodes_image, 
+    text_to_textnodes,
+    extract_markdown_images,
+    extract_markdown_links,
+)
 from textnode import TextNode, TextType
 from test_config import *
 from pprint import pprint
@@ -210,6 +217,50 @@ class TestHTMLNode(unittest.TestCase):
             new_nodes,
             expected
         )
+
+    def test_text_to_textnode(self):
+        text = "This is **text** with an _italic_ word and a `code block` and an ![obi wan image](https://i.imgur.com/fJRm4Vk.jpeg) and a [link](https://boot.dev)"
+        nodes = text_to_textnodes(text)
+        expected = [
+            TextNode("This is ", TextType.TEXT),
+            TextNode("text", TextType.BOLD),
+            TextNode(" with an ", TextType.TEXT),
+            TextNode("italic", TextType.ITALIC),
+            TextNode(" word and a ", TextType.TEXT),
+            TextNode("code block", TextType.CODE),
+            TextNode(" and an ", TextType.TEXT),
+            TextNode("obi wan image", TextType.IMAGE, "https://i.imgur.com/fJRm4Vk.jpeg"),
+            TextNode(" and a ", TextType.TEXT),
+            TextNode("link", TextType.LINK, "https://boot.dev"),
+        ]
+        self.assertEqual(
+            nodes,
+            expected
+        )
+
+class TestImageAndLinkExtract(unittest.TestCase):
+
+    def test_extract_markdown_images(self):
+        matches = extract_markdown_images(
+            TEST_TEXT_1
+        )
+        self.assertListEqual([("Python Logo", "https://i.imgur.com/zjjcJKZ.png")], matches)
+	
+    def test_extract_markdown_links(self):
+        matches = extract_markdown_links(
+            TEST_TEXT_2
+        )
+        self.assertListEqual([("Google", "https://www.google.com")], matches)
+	
+    def test_extracting_images_and_links(self):
+        image_matches = extract_markdown_images(
+            TEST_TEXT_3
+        )
+        self.assertListEqual([("Python Logo", "https://i.imgur.com/zjjcJKZ.png"), ("cat", "https://i.imgur.com/JmwOq9S.jpeg")], image_matches)
+        link_matches = extract_markdown_links(
+		    TEST_TEXT_3
+	    )
+        self.assertListEqual([("Google", "https://www.google.com"), ("Microsoft", "https://www.microsoft.com")], link_matches)
 
         
 
