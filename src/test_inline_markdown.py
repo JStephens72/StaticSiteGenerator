@@ -13,7 +13,7 @@ from test_config import *
 from pprint import pprint
 
 
-class TestHTMLNode(unittest.TestCase):
+class TestInlineMarkdown(unittest.TestCase):
     def test_no_markup(self):
         node = TextNode("This text contains no markups and so should not be processed.", TextType.TEXT)
         new_nodes = [node]
