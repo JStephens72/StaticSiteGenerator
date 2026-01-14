@@ -1,7 +1,9 @@
 import unittest
 
-from splitnodes import split_nodes_delimiter
+from splitnodes import split_nodes_delimiter, split_nodes_link, split_nodes_image
 from textnode import TextNode, TextType
+from test_config import *
+from pprint import pprint
 
 
 class TestHTMLNode(unittest.TestCase):
@@ -106,6 +108,109 @@ class TestHTMLNode(unittest.TestCase):
             new_nodes,
             expected
         )
+
+    def test_split_nodes_link_no_link(self):
+        node = TextNode(TEST_TEXT_5, TextType.TEXT)
+        old_nodes = [node]
+        new_nodes = split_nodes_link(old_nodes)
+        expected = old_nodes
+        self.assertEqual(
+            new_nodes,
+            expected
+        )
+
+    def test_split_nodes_link_one_link(self):
+        node = TextNode(TEST_TEXT_2, TextType.TEXT)
+        old_nodes = [node]
+        new_nodes = split_nodes_link(old_nodes)
+        expected = [
+            TextNode("This is text with a hyperlink:", TextType.TEXT),
+            TextNode(ANCHOR_1, TextType.LINK, LINK_1),
+            TextNode(". ", TextType.TEXT),
+        ]
+        self.assertEqual(
+            new_nodes,
+            expected
+        )
+
+    def test_split_nodes_link_two_link(self):
+        node = TextNode(TEST_TEXT_3B, TextType.TEXT)
+        old_nodes = [node]
+        new_nodes = split_nodes_link(old_nodes)
+        expected = [
+            TextNode("This text contains two hyperlinks:", TextType.TEXT),
+            TextNode(ANCHOR_1, TextType.LINK, LINK_1),
+            TextNode(" and ", TextType.TEXT),
+            TextNode(ANCHOR_2, TextType.LINK, LINK_2),
+            TextNode(". ", TextType.TEXT),
+        ]
+        self.assertEqual(
+            new_nodes,
+            expected
+        )
+
+    def test_split_nodes_image_no_image(self):
+        node = TextNode(TEST_TEXT_4, TextType.TEXT)
+        old_nodes = [node]
+        new_nodes = split_nodes_image(old_nodes)
+        expected = old_nodes
+        self.assertEqual(
+            new_nodes,
+            expected
+        )
+
+    def test_split_nodes_image_one_image(self):
+        node = TextNode(TEST_TEXT_1, TextType.TEXT)
+        old_nodes = [node]
+        new_nodes = split_nodes_image(old_nodes)
+        expected = [
+            TextNode("This is text with an image:", TextType.TEXT),
+            TextNode(ALT_TEXT_1, TextType.IMAGE, IMAGE_1),
+            TextNode(". ", TextType.TEXT),
+        ]
+        self.assertEqual(
+            new_nodes,
+            expected
+        )
+
+    def test_split_nodes_image_two_image(self):
+        node = TextNode(TEST_TEXT_3A, TextType.TEXT)
+        old_nodes = [node]
+        new_nodes = split_nodes_image(old_nodes)
+        expected = [
+            TextNode("This text contains two images:", TextType.TEXT),
+            TextNode(ALT_TEXT_1, TextType.IMAGE, IMAGE_1),
+            TextNode(" and ", TextType.TEXT),
+            TextNode(ALT_TEXT_2, TextType.IMAGE, IMAGE_2),
+            TextNode(". ", TextType.TEXT),
+        ]
+        self.assertEqual(
+            new_nodes,
+            expected
+        )
+
+    def test_split_nodes_image_and_link(self):
+        node = TextNode(TEST_TEXT_3, TextType.TEXT)
+        old_nodes = [node]
+        new_nodes = split_nodes_link(old_nodes)
+        new_nodes = split_nodes_image(new_nodes)
+        expected = [
+            TextNode("This text contains two images:", TextType.TEXT),
+            TextNode(ALT_TEXT_1, TextType.IMAGE, IMAGE_1),
+            TextNode(" and ", TextType.TEXT),
+            TextNode(ALT_TEXT_2, TextType.IMAGE, IMAGE_2),
+            TextNode(". This text contains two hyperlinks:", TextType.TEXT),
+            TextNode(ANCHOR_1, TextType.LINK, LINK_1),
+            TextNode(" and ", TextType.TEXT),
+            TextNode(ANCHOR_2, TextType.LINK, LINK_2),
+            TextNode(". ", TextType.TEXT),
+            
+        ]
+        self.assertEqual(
+            new_nodes,
+            expected
+        )
+
         
 
 

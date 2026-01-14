@@ -10,9 +10,9 @@ ALT_TEXT_2 = "cat"
 
 TEST_TEXT_1 = f"This is text with an image:![{ALT_TEXT_1}]({IMAGE_1}). "
 TEST_TEXT_2 = f"This is text with a hyperlink:[{ANCHOR_1}]({LINK_1}). "
-TEST_TEXT_3A = f"This text contains two images: ![{ALT_TEXT_1}]({IMAGE_1}) and ![{ALT_TEXT_2}]({IMAGE_2}). "
-TEST_TEXT_3B = f"This text contains two hyperlinks: [{ANCHOR_1}]({LINK_1}) and [{ANCHOR_2}]({LINK_2}). "
+TEST_TEXT_3A = f"This text contains two images:![{ALT_TEXT_1}]({IMAGE_1}) and ![{ALT_TEXT_2}]({IMAGE_2}). "
+TEST_TEXT_3B = f"This text contains two hyperlinks:[{ANCHOR_1}]({LINK_1}) and [{ANCHOR_2}]({LINK_2}). "
 TEST_TEXT_3 = f"{TEST_TEXT_3A}{TEST_TEXT_3B}"
+TEST_TEXT_4 = "This text contains no images."
+TEST_TEXT_5 = "This text contains no links."
 
-EXTRACT_IMAGE_REGEX = r"!\[([^\[\]]*)\]\(([^\(\)]*)\)"
-EXTRACT_LINK_REGEX = r"(?<!!)\[([^\[\]]*)\]\(([^\(\)]*)\)"

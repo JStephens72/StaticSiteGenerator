@@ -1,6 +1,6 @@
 import unittest
-from main import extract_markdown_images, extract_markdown_links
-from config import *
+from splitnodes import extract_markdown_images, extract_markdown_links
+from test_config import *
 
 class TestHTMLNode(unittest.TestCase):
 
@@ -17,7 +17,6 @@ class TestHTMLNode(unittest.TestCase):
         self.assertListEqual([("Google", "https://www.google.com")], matches)
 	
     def test_extracting_images_and_links(self):
-        print(TEST_TEXT_3)
         image_matches = extract_markdown_images(
             TEST_TEXT_3
         )
