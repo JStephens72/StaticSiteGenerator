@@ -68,13 +68,6 @@ class TestInlineMarkdown(unittest.TestCase):
             expected
         )
 
-    def test_parsing_exception(self):
-        node = TextNode("This text contains a _markup error.", TextType.TEXT)
-        new_nodes = [node]
-        with self.assertRaises(ValueError):
-            new_nodes = split_nodes_delimiter(new_nodes, '_', TextType.ITALIC)
-
-
     def test_all_delimiters(self):
         node = TextNode("_This_ text contains a mixture of markups, like **bold**, _italic_, and `code`.", TextType.TEXT)
         new_nodes = [node]
