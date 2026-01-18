@@ -1,23 +1,19 @@
-from textnode import TextType
-from htmlnode import LeafNode, ParentNode, HTMLNode
-from inline_markdown import *
-from markdown_blocks import markdown_to_html_node
-from pprint import pprint
+import os
+import shutil
+from copystatic import copy_files_recursive
+from gencontent import generate_pages_recursive
+from pathlib import Path
 
-
+STATIC = 'static'
+PUBLIC = 'public'
+SOURCE = 'content'
+TEMPLATE = 'template.html'
+DESTINATION = 'public'
 
 def main():
-    node = TextNode("This is a text node", TextType.BOLD, "https://www.boot.dev")
-    #print(node)
 
-    md = """
-```
-This is text that _should_ remain
-the **same** even with inline stuff
-```
-"""
+    copy_files_recursive(STATIC, PUBLIC)
+    generate_pages_recursive(SOURCE, TEMPLATE, DESTINATION)
+    return
 
-    node = markdown_to_html_node(md)
-    print(node.to_html())
-
-#main()
+main()
