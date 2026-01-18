@@ -11,7 +11,7 @@ def extract_title(markdown):
             return line[2:]
     raise ValueError("no title found")
     
-def generate_page(from_path, template_path, dest_path):
+def generate_page(from_path, template_path, dest_path, basepath):
     markdown_file = Path(from_path)
     template = Path(template_path)
     html_file = Path(dest_path)
@@ -31,6 +31,8 @@ def generate_page(from_path, template_path, dest_path):
 
     template_file = template_file.replace("{{ Title }}", page_title)
     template_file = template_file.replace("{{ Content }}", html)
+    template_file = template_file.replace('href="/', f'href={basepath}')
+    template_file = template_file.replace('src="/', f'src={basepath}')
 
     html_file.parent.mkdir(parents=True, exist_ok=True)
     with html_file.open("w") as file:
@@ -38,7 +40,7 @@ def generate_page(from_path, template_path, dest_path):
 
     return
 
-def generate_pages_recursive(dir_path_content, template_path, dest_dir_path):
+def generate_pages_recursive(dir_path_content, template_path, dest_dir_path, basepath):
     content = Path(dir_path_content)
     template = Path(template_path)
     destination = Path(dest_dir_path)
@@ -46,9 +48,9 @@ def generate_pages_recursive(dir_path_content, template_path, dest_dir_path):
     for entry in content.iterdir():
         if entry.is_dir():
             next_destination = destination.joinpath(entry.name)
-            generate_pages_recursive(entry, template, next_destination)
+            generate_pages_recursive(entry, template, next_destination, basepath)
         elif entry.is_file():
             if entry.suffix == '.md':
                 html_file = entry.stem + '.html'
                 destination_file = destination.joinpath(html_file)
-                generate_page(entry, template, destination_file)
+                generate_page(entry, template, destination_file, basepath)
