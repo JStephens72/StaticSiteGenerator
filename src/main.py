@@ -4,10 +4,10 @@ import sys
 from urllib.parse import urlparse
 
 STATIC = 'static'
-PUBLIC = 'public'
+PUBLIC = 'docs'
 SOURCE = 'content'
 TEMPLATE = 'template.html'
-DESTINATION = 'public'
+DESTINATION = 'docs'
 
 def main(basepath):
     
