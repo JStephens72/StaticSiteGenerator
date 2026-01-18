@@ -1,2 +1,2 @@
 #!/bin/bash
-python3 src/main.py "https://jstephen72.github.io"
+python3 src/main.py "https://jstephens72.github.io/StaticSiteGenerator/"
